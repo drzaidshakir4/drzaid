@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلايد شو المؤتمرات</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #7c606d;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* يجعل الصفحة بالكامل بحجم الشاشة */
+            overflow: hidden; /* يمنع التمرير في حالة تجاوز السلايدر الحجم */
+        }
+
+        .swiper-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 1000px;
+            height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background-color: #4e3c44;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: 15px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* يحافظ على أبعاد الصورة دون اقتصاص */
+            border-radius: 10px;
+        }
+
+        .swiper-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .text-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #f1d59e;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .swiper-slide:hover .text-overlay {
+            opacity: 1;
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #f1d59e;
+            border-radius: 50%;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .swiper-pagination-bullet {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            background-color: #f1d59e;
+        }
+
+        .swiper-pagination-bullet:hover {
+            background-color: rgb(131, 94, 94);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.08_d3fa8bd2.jpg" alt="المؤتمر الأول">
+                <div class="text-overlay">Attending LAHA Symposium for fotona company in slovenia.
+                    One of the largest companies in laser production, and sharing experience about laser from world wide doctors</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.10_42fb999b.jpg" alt="المؤتمر الثاني - 1">
+                <div class="text-overlay">Attending ICOPLAST2023 in dubai to know the last update in platic and reconstructive surgery and sharing information with most famous doctor in this field</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.09_3bef8bf5.jpg" alt="المؤتمر الثاني - 2">
+                <div class="text-overlay">Attending ICOPLAST2023 in dubai to know the last update in platic and reconstructive surgery and sharing information with most famous doctor in this field</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.09_6193c108.jpg" alt="المؤتمر الثاني - 3">
+                <div class="text-overlay">Attending ICOPLAST2023 in dubai to know the last update in platic and reconstructive surgery and sharing information with most famous doctor in this field</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.10_d4ecf8cb.jpg" alt="المؤتمر الثالث - 1">
+                <div class="text-overlay">Attending workshop for body filler provided by dr. Matt stefanelli to know the last update and tricks in this topic</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.10_d9ecf3b5.jpg" alt="المؤتمر الثالث - 2">
+                <div class="text-overlay">Attending workshop for body filler provided by dr. Matt stefanelli to know the last update and tricks in this topic</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.11_04be6494.jpg" alt="المؤتمر الرابع - 1">
+                <div class="text-overlay">Attendind EPSC in dubai to know the most update techniques in plastic surgery field , and get the last tips and tricks in aesthetic surgery</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.12_a717a735.jpg" alt="المؤتمر الرابع - 2">
+                <div class="text-overlay">Attendind EPSC in dubai to know the most update techniques in plastic surgery field , and get the last tips and tricks in aesthetic surgery</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.11_8ea4f476.jpg" alt="المؤتمر الخامس - 1">
+                <div class="text-overlay">Attendind dubai derma congress to stay tuned with last update in aesthetic non surgical rejuvenation in our field</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="WhatsApp Image 2025-03-10 at 01.51.11_88565c4e.jpg" alt="المؤتمر الخامس - 2">
+                <div class="text-overlay">Attendind dubai derma congress to stay tuned with last update in aesthetic non surgical rejuvenation in our field</div>
+            </div>
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+        });
+    </script>
+
+</body>
+</html>
