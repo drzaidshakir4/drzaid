@@ -1,197 +1,692 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سلايد شو المؤتمرات</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <title>Dr. Zaid Shakir | Conference Portfolio</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@9/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #7c606d;
-            text-align: center;
+        :root {
+            --primary: #5d4954;
+            --secondary: #e8c07d;
+            --dark: #3a2e36;
+            --light: #f9f5f0;
+            --overlay: rgba(58, 46, 54, 0.9);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary), #4a3944);
+            color: var(--light);
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* يجعل الصفحة بالكامل بحجم الشاشة */
-            overflow: hidden; /* يمنع التمرير في حالة تجاوز السلايدر الحجم */
+            padding: 2rem;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .portfolio-container {
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            margin-bottom: 4rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .swiper-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 90%;
-            max-width: 1000px;
-            height: 500px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            background-color: #4e3c44;
+            width: 100%;
+            height: 70vh;
+            min-height: 600px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
             overflow: hidden;
             position: relative;
+            background: var(--dark);
+            isolation: isolate;
         }
 
         .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
-            border-radius: 15px;
-            transition: transform 0.5s ease-in-out;
+            overflow: hidden;
         }
 
-        .swiper-slide img {
+        .slide-image {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* يحافظ على أبعاد الصورة دون اقتصاص */
-            border-radius: 10px;
+            object-fit: contain;
+            transform: scale(1.1);
+            transition: var(--transition);
+            will-change: transform;
         }
 
-        .swiper-slide:hover img {
-            transform: scale(1.05);
+        .swiper-slide-active .slide-image {
+            transform: scale(1);
         }
 
-        .text-overlay {
+        .slide-overlay {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #f1d59e;
-            padding: 12px 18px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: opacity 0.3s ease;
-            opacity: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, var(--overlay), transparent 50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            z-index: 1;
         }
 
-        .swiper-slide:hover .text-overlay {
+        .slide-content {
+            max-width: 800px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: var(--transition);
+            transition-delay: 0.3s;
+        }
+
+        .swiper-slide-active .slide-content {
+            transform: translateY(0);
             opacity: 1;
         }
 
-        .swiper-button-next, .swiper-button-prev {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #f1d59e;
-            border-radius: 50%;
-            padding: 10px;
-            transition: background-color 0.3s ease;
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.3;
         }
 
-        .swiper-button-next:hover, .swiper-button-prev:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        .slide-description {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .slide-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item i {
+            color: var(--secondary);
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(232, 192, 125, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50%;
+            transition: var(--transition);
+            border: 1px solid rgba(232, 192, 125, 0.3);
+            opacity: 0.8;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background-color: rgba(232, 192, 125, 0.3);
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .swiper-pagination {
+            bottom: 30px !important;
         }
 
         .swiper-pagination-bullet {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
             width: 12px;
             height: 12px;
-            transition: background-color 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.6);
+            opacity: 1;
+            transition: var(--transition);
         }
 
         .swiper-pagination-bullet-active {
-            background-color: #f1d59e;
+            background-color: var(--secondary);
+            transform: scale(1.3);
         }
 
-        .swiper-pagination-bullet:hover {
-            background-color: rgb(131, 94, 94);
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+            width: 100%;
+        }
+
+        .nav-button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 15px rgba(232, 192, 125, 0.3);
+        }
+
+        .nav-button:hover {
+            background-color: #e0b66b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(232, 192, 125, 0.4);
+        }
+
+        .home-button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(232, 192, 125, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .home-button:hover {
+            background-color: #e0b66b;
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 8px 25px rgba(232, 192, 125, 0.4);
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--secondary);
+            z-index: 10;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 1200px) {
+            .swiper-container {
+                height: 65vh;
+                min-height: 550px;
+            }
+            
+            .slide-overlay {
+                padding: 2.5rem;
+            }
+            
+            .slide-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header h1 {
+                font-size: 2.4rem;
+            }
+            
+            .swiper-container {
+                height: 60vh;
+                min-height: 500px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .slide-description {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .swiper-container {
+                height: 55vh;
+                min-height: 450px;
+                border-radius: 15px;
+            }
+            
+            .slide-overlay {
+                padding: 2rem;
+            }
+            
+            .slide-content {
+                max-width: 100%;
+            }
+            
+            .swiper-button-next,
+            .swiper-button-prev {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .home-button {
+                padding: 0.9rem 2rem;
+                bottom: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                margin-bottom: 1.5rem;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .swiper-container {
+                height: 50vh;
+                min-height: 400px;
+                border-radius: 12px;
+            }
+            
+            .slide-overlay {
+                padding: 1.5rem;
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .slide-meta {
+                flex-direction: column;
+                gap: 0.8rem;
+                margin-top: 1rem;
+            }
+            
+            .home-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                bottom: 15px;
+                width: 90%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+                padding: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="progress-bar"></div>
 
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.08_d3fa8bd2.jpg" alt="المؤتمر الأول">
-                <div class="text-overlay">Attended the LAHA Symposium hosted by Fotona in Slovenia, one of the leading global companies in laser technology. The event brought together doctors from around the world to share valuable insights and experiences on the latest advancements in laser treatments.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.10_42fb999b.jpg" alt="المؤتمر الثاني - 1">
-                <div class="text-overlay">Attended ICOPLAST 2023 in Dubai to stay updated on the latest advancements in plastic and reconstructive surgery, while exchanging knowledge with some of the most renowned experts in the field.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.09_3bef8bf5.jpg" alt="المؤتمر الثاني - 2">
-                <div class="text-overlay">Attended ICOPLAST 2023 in Dubai to stay updated on the latest advancements in plastic and reconstructive surgery, while exchanging knowledge with some of the most renowned experts in the field.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.09_6193c108.jpg" alt="المؤتمر الثاني - 3">
-                <div class="text-overlay">Attended ICOPLAST 2023 in Dubai to stay updated on the latest advancements in plastic and reconstructive surgery, while exchanging knowledge with some of the most renowned experts in the field.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.10_d4ecf8cb.jpg" alt="المؤتمر الثالث - 1">
-                <div class="text-overlay">Attended a body filler workshop conducted by Dr. Matt Stefanelli to learn the latest techniques and updates in the field, enhancing skills and knowledge in advanced filler procedures.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.10_d9ecf3b5.jpg" alt="المؤتمر الثالث - 2">
-                <div class="text-overlay">Attended a body filler workshop conducted by Dr. Matt Stefanelli to learn the latest techniques and updates in the field, enhancing skills and knowledge in advanced filler procedures.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.11_04be6494.jpg" alt="المؤتمر الرابع - 1">
-                <div class="text-overlay">Attended the EPSC in Dubai to explore the latest techniques in plastic surgery and gain valuable tips and insights into aesthetic surgery from leading experts in the field</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.12_a717a735.jpg" alt="المؤتمر الرابع - 2">
-                <div class="text-overlay">Attended the EPSC in Dubai to explore the latest techniques in plastic surgery and gain valuable tips and insights into aesthetic surgery from leading experts in the field</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.11_8ea4f476.jpg" alt="المؤتمر الخامس - 1">
-                <div class="text-overlay">Attended the Dubai Derma Congress to stay updated on the latest advancements in aesthetic non-surgical rejuvenation, enhancing expertise in the field of aesthetic treatments.</div>
-            </div>
-            <div class="swiper-slide">
-                <img src="WhatsApp Image 2025-03-10 at 01.51.11_88565c4e.jpg" alt="المؤتمر الخامس - 2">
-                <div class="text-overlay">Attended the Dubai Derma Congress to stay updated on the latest advancements in aesthetic non-surgical rejuvenation, enhancing expertise in the field of aesthetic treatments.</div>
-            </div>
+    <div class="portfolio-container">
+        <div class="header">
+            <h1>Conference Portfolio</h1>
+            <p>Professional development through international medical conferences and workshops</p>
         </div>
 
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-    </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <img class="slide-image" src="WhatsApp Image 2025-03-10 at 01.51.08_d3fa8bd2.jpg" alt="LAHA Symposium" loading="lazy">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h2 class="slide-title">LAHA Symposium</h2>
+                            <p class="slide-description">Attended the LAHA Symposium hosted by Fotona in Slovenia, one of the leading global companies in laser technology. The event brought together doctors from around the world to share valuable insights and experiences on the latest advancements in laser treatments.</p>
+                            <div class="slide-meta">
+                                <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Ljubljana, Slovenia</span>
+                                <span class="meta-item"><i class="fas fa-calendar-alt"></i> March 2023</span>
+                                <span class="meta-item"><i class="fas fa-users"></i> 150+ Attendees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <img class="slide-image" src="WhatsApp Image 2025-03-10 at 01.51.10_42fb999b.jpg" alt="ICOPLAST 2023" loading="lazy">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h2 class="slide-title">ICOPLAST 2023</h2>
+                            <p class="slide-description">Attended ICOPLAST 2023 in Dubai to stay updated on the latest advancements in plastic and reconstructive surgery, while exchanging knowledge with some of the most renowned experts in the field.</p>
+                            <div class="slide-meta">
+                                <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+                                <span class="meta-item"><i class="fas fa-calendar-alt"></i> November 2023</span>
+                                <span class="meta-item"><i class="fas fa-users"></i> 300+ Attendees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <img class="slide-image" src="WhatsApp Image 2025-03-10 at 01.51.09_3bef8bf5.jpg" alt="ICOPLAST 2023" loading="lazy">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h2 class="slide-title">ICOPLAST Workshop</h2>
+                            <p class="slide-description">Participated in hands-on workshops at ICOPLAST 2023, gaining practical experience with new surgical techniques under the guidance of international experts.</p>
+                            <div class="slide-meta">
+                                <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+                                <span class="meta-item"><i class="fas fa-calendar-alt"></i> November 2023</span>
+                                <span class="meta-item"><i class="fas fa-certificate"></i> Workshop</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <img class="slide-image" src="WhatsApp Image 2025-03-10 at 01.51.10_d4ecf8cb.jpg" alt="Body Filler Workshop" loading="lazy">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h2 class="slide-title">Body Filler Masterclass</h2>
+                            <p class="slide-description">Attended an intensive body filler workshop conducted by Dr. Matt Stefanelli to learn the latest techniques and updates in the field, enhancing skills and knowledge in advanced filler procedures.</p>
+                            <div class="slide-meta">
+                                <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+                                <span class="meta-item"><i class="fas fa-calendar-alt"></i> September 2023</span>
+                                <span class="meta-item"><i class="fas fa-certificate"></i> Hands-on Training</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="swiper-slide">
+                    <img class="slide-image" src="WhatsApp Image 2025-03-10 at 01.51.11_04be6494.jpg" alt="EPSC Dubai" loading="lazy">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h2 class="slide-title">EPSC Dubai</h2>
+                            <p class="slide-description">Attended the Emirates Plastic Surgery Conference (EPSC) to explore the latest techniques in plastic surgery and gain valuable tips and insights into aesthetic surgery from leading experts in the field.</p>
+                            <div class="slide-meta">
+                                <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+                                <span class="meta-item"><i class="fas fa-calendar-alt"></i> January 2024</span>
+                                <span class="meta-item"><i class="fas fa-users"></i> 250+ Attendees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6 -->
+                <div class="swiper-slide">
+                    <img class="slide-image" src="WhatsApp Image 2025-03-10 at 01.51.11_8ea4f476.jpg" alt="Dubai Derma Congress" loading="lazy">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h2 class="slide-title">Dubai Derma Congress</h2>
+                            <p class="slide-description">Attended the Dubai Derma Congress to stay updated on the latest advancements in aesthetic non-surgical rejuvenation, enhancing expertise in the field of aesthetic treatments.</p>
+                            <div class="slide-meta">
+                                <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+                                <span class="meta-item"><i class="fas fa-calendar-alt"></i> March 2024</span>
+                                <span class="meta-item"><i class="fas fa-users"></i> 500+ Attendees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-button" id="prev-btn">
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button class="nav-button" id="next-btn">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <div class="home-button-container">
+    <a href="https://drzaidshakir.com/" class="home-button">
+        <i class="fas fa-home"></i> Return to Main Website
+    </a>
+</div>
+</div>
+    <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
     <script>
-        var swiper = new Swiper('.swiper-container', {
-            loop: true,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Swiper
+            const swiper = new Swiper('.swiper-container', {
+                loop: true,
+                speed: 1000,
+                autoplay: {
+                    delay: 8000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                    dynamicBullets: true,
+                    dynamicMainBullets: 3,
+                },
+                effect: 'creative',
+                creativeEffect: {
+                    prev: {
+                        shadow: true,
+                        translate: [0, 0, -400],
+                    },
+                    next: {
+                        translate: ['100%', 0, 0],
+                    },
+                },
+                keyboard: {
+                    enabled: true,
+                    onlyInViewport: true,
+                },
+                mousewheel: {
+                    invert: false,
+                    sensitivity: 1,
+                    eventsTarget: '.swiper-container',
+                },
+                grabCursor: true,
+                preloadImages: false,
+                lazy: {
+                    loadPrevNext: true,
+                    loadOnTransitionStart: true,
+                    loadPrevNextAmount: 2,
+                },
+                watchSlidesProgress: true,
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                    },
+                    768: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView: 1,
+                        spaceBetween: 30,
+                    },
+                },
+                on: {
+                    init: function() {
+                        animateSlideContent(this.slides[this.activeIndex]);
+                        updateProgressBar();
+                    },
+                    slideChangeTransitionStart: function() {
+                        resetSlideContent(this.slides);
+                    },
+                    slideChangeTransitionEnd: function() {
+                        animateSlideContent(this.slides[this.activeIndex]);
+                        updateProgressBar();
+                    },
+                    autoplayTimeLeft: function(swiper, timeLeft, percentage) {
+                        updateProgressBar(percentage);
+                    }
+                }
+            });
+
+            // Custom navigation buttons
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                swiper.slidePrev();
+            });
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                swiper.slideNext();
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    swiper.slidePrev();
+                } else if (e.key === 'ArrowRight') {
+                    swiper.slideNext();
+                }
+            });
+
+            // Animate slide content
+            function animateSlideContent(slide) {
+                const content = slide.querySelector('.slide-content');
+                if (content) {
+                    content.style.transition = 'none';
+                    content.style.transform = 'translateY(30px)';
+                    content.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        content.style.transition = 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease';
+                        content.style.transform = 'translateY(0)';
+                        content.style.opacity = '1';
+                    }, 50);
+                }
+            }
+
+            // Reset slide content
+            function resetSlideContent(slides) {
+                slides.forEach(slide => {
+                    const content = slide.querySelector('.slide-content');
+                    if (content) {
+                        content.style.transform = 'translateY(30px)';
+                        content.style.opacity = '0';
+                    }
+                });
+            }
+
+            // Progress bar for autoplay
+            function updateProgressBar(percentage = 1) {
+                const progressBar = document.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = `${percentage * 100}%`;
+                    progressBar.style.transition = percentage === 1 ? 'none' : 'width 0.1s linear';
+                }
+            }
+
+            // Parallax effect on mouse move
+            const swiperContainer = document.querySelector('.swiper-container');
+            if (swiperContainer) {
+                swiperContainer.addEventListener('mousemove', (e) => {
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
+                    
+                    const activeSlide = document.querySelector('.swiper-slide-active');
+                    if (activeSlide) {
+                        const image = activeSlide.querySelector('.slide-image');
+                        if (image) {
+                            image.style.transform = `scale(1.03) translate(${x * 10}px, ${y * 10}px)`;
+                        }
+                    }
+                });
+
+                swiperContainer.addEventListener('mouseleave', () => {
+                    const activeSlide = document.querySelector('.swiper-slide-active');
+                    if (activeSlide) {
+                        const image = activeSlide.querySelector('.slide-image');
+                        if (image) {
+                            image.style.transform = 'scale(1.03)';
+                        }
+                    }
+                });
+            }
         });
     </script>
-<!-- زر العودة إلى الصفحة الرئيسية -->
-<a href="https://drzaidshakir.com/">
-    <button style="
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #fcf3a7;
-        color: rgb(83, 60, 83);
-        padding: 10px 20px;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    " onmouseover="this.style.backgroundColor='#f3e56a'" onmouseout="this.style.backgroundColor='#f8ef9a'">
-        Back to Home
-    </button>
-</a>
 </body>
 </html>
